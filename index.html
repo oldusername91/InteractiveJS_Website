@@ -1,0 +1,383 @@
+<!DOCTYPE html> <!-- Tell the browser what version of HTML is being used-->
+<html lang="en"> <!-- Tells the browser what language the webpage should be encoded in -->
+<head> <!-- The start of the Head content, this stores mets data, links to external style and script sheets, and title content about the site -->
+        <!-- The charset defines the character encoding of the page -->
+    <meta charset="utf-8"/>
+    <!-- link to site style sheet -->
+    <link rel="stylesheet" href= "styles/styles.css" type="text/css"/>
+    <link rel="stylesheet" href="js/tooltipster-master/dist/css/tooltipster.bundle.min.css" type="text/css"/>
+    <link rel="stylesheet" href="js/tooltipster-master/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-light.min.css" type="text/css"/>
+    <link rel="stylesheet" href="js/twentytwenty-master/css/twentytwenty.css" type="text/css"/>
+    <link rel="stylesheet" href="js/jquery-ui-1.12.1/pepper-grinder/theme.css" type="text/css"/>
+    <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.css" type="text/css"/>
+    <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.structure.css" type="text/css"/>
+    
+    <!-- links to relevant jQuery and javascript -->
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
+    <script type="text/javascript" src="js/tooltipster-master/dist/js/tooltipster.bundle.min.js"></script>
+    <script type="text/javascript" src="js/twentytwenty-master/js/jquery.twentytwenty.js"></script>
+    <script type="text/javascript" src="js/twentytwenty-master/js/jquery.event.move.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.12.1/jquery-ui.min.js" ></script>
+    <script type="text/javascript" src="js/imagesloaded-master/imagesloaded.pkgd.min.js"></script>
+    
+    <!-- The name and content attributes provide information for accessibility reasons for the page -->
+    <meta name="description" content="A website designed for Curtin University Interactive Design. This site offers an interactive experience for the user discovering how to make a margherita pizza">
+    <title>"Pizza Pro"</title><!-- The title that appears in the browser tab -->
+    <!--[if lt IE 9]-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <!--[endif]-->
+    <script>
+        $(document).ready(function(){
+            $('.tooltip').tooltipster({
+                theme: 'tooltipster-light',
+                contentCloning: true
+            });
+
+            $("#accordion").accordion({
+               collapsible: true,
+               heightStyle: "content"
+            });
+            // imagesLoaded plugin from http://imagesloaded.desandro.com/
+            $("#cooking").imagesLoaded(function() {
+                $("#cooking").twentytwenty();
+                });
+        });
+        
+        // All the below JQuery is used from https://jqueryui.com/droppable/#photo-manager
+        // I could not get it to work without using their declared variables so I had to leave
+        // them in even though the names don;t make much sense in relation to my project.
+          $( function() {
+ 
+            // There's the gallery and the trash
+            var $gallery = $( "#gallery" ),
+              $trash = $( "#trash" );
+
+            // Let the gallery items be draggable
+            $( "li", $gallery ).draggable({
+              cancel: "a.ui-icon", // clicking an icon won't initiate dragging
+              revert: "invalid", // when not dropped, the item will revert back to its initial position
+              containment: "document",
+              helper: "clone",
+              cursor: "move"
+            });
+
+            // Let the trash be droppable, accepting the gallery items
+            $trash.droppable({
+              accept: "#gallery > li",
+              classes: {
+                "ui-droppable-active": "ui-state-highlight"
+              },
+              drop: function( event, ui ) {
+                deleteImage( ui.draggable );
+              }
+            });
+ 
+        // Let the gallery be droppable as well, accepting items from the trash
+        $gallery.droppable({
+          accept: "#trash li",
+          classes: {
+            "ui-droppable-active": "custom-state-active"
+          },
+          drop: function( event, ui ) {
+            recycleImage( ui.draggable );
+          }
+        });
+
+        // Image deletion function
+        var recycle_icon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Replace Topping' class='ui-icon ui-icon-refresh'>Recycle image</a>";
+        function deleteImage( $item ) {
+          $item.fadeOut(function() {
+            var $list = $( "ul", $trash ).length ?
+              $( "ul", $trash ) :
+              $( "<ul class='gallery ui-helper-reset'/>" ).appendTo( $trash );
+
+            $item.find( "a.ui-icon-plus" ).remove();
+            $item.append( recycle_icon ).appendTo( $list ).fadeIn(function() {
+              $item
+                .animate({ width: "48px" })
+                .find( "img" )
+                  .animate({ height: "36px" });
+            });
+          });
+        }
+
+        // Image recycle function
+        var trash_icon = "<a href='link/to/trash/script/when/we/have/js/off' title='Delete this image' class='ui-icon ui-icon-plus'>Delete image</a>";
+        function recycleImage( $item ) {
+          $item.fadeOut(function() {
+            $item
+              .find( "a.ui-icon-refresh" )
+                .remove()
+              .end()
+              .css( "width", "96px")
+              .find( "img" )
+                .css( "height", "72px" )
+              .end()
+              .appendTo( $gallery )
+              .fadeIn();
+          });
+        }
+
+        // Image preview function, demonstrating the ui.dialog used as a modal window
+        function viewLargerImage( $link ) {
+          var src = $link.attr( "href" ),
+            title = $link.siblings( "img" ).attr( "alt" ),
+            $modal = $( "img[src$='" + src + "']" );
+
+          if ( $modal.length ) {
+            $modal.dialog( "open" );
+          } else {
+            var img = $( "<img alt='" + title + "' width='384' height='288' style='display: none; padding: 8px;' />" )
+              .attr( "src", src ).appendTo( "body" );
+            setTimeout(function() {
+              img.dialog({
+                title: title,
+                width: 400,
+                modal: true
+              });
+            }, 1 );
+      }
+    }
+ 
+    // Resolve the icons behavior with event delegation
+    $( "ul.gallery > li" ).on( "click", function( event ) {
+      var $item = $( this ),
+        $target = $( event.target );
+ 
+      if ( $target.is( "a.ui-icon-trash" ) ) {
+        deleteImage( $item );
+      } else if ( $target.is( "a.ui-icon-zoomin" ) ) {
+        viewLargerImage( $target );
+      } else if ( $target.is( "a.ui-icon-refresh" ) ) {
+        recycleImage( $item );
+      }
+ 
+      return false;
+    });
+  });
+ //End of sourced javascript from https://jqueryui.com/droppable/#photo-manager
+    </script>
+ <!-- End of the head content -->   
+</head>
+<!-- All displayable content for the page is located in the body tags -->
+<body id="home">
+    <div id="nav_items">
+        <nav class="navbar">
+            <li><a href="#home" class=nav_home><img src="images/logo.png" width="120px"></a></li>
+
+                <div class="nav_list">
+                <li><a href="#history">History</a></li>
+                <li><a href="#dough">Dough</a></li>
+                <li><a href="#toppings">Toppings</a></li>
+                <li><a href="#cook">Cooking</a></li>
+                </div>
+
+            <div>
+            <h2 class="explore"><br>Explore the different areas and symbols to discover how to make the perfect Magherita</h2>
+        </div>
+        </nav>
+        <div class="clearboth"></div>
+    </div>
+    <div class="home_container">
+        <!-- Image sourced from http://www.gourmet.com/recipes/2000s/2009/01/pizza-margherita.html 
+-->
+        <img class="home_img" src="images/home.jpg" alt="Home page pizza background" />
+
+        <div>
+            <div class="dough_cross">
+                <a href="#dough"><img class="tooltip" data-tooltip-content="#tooltip_content" src="images/cross.png" alt="Marker crocc for navigation" /></a>
+            </div>
+            <div class="tooltip_templates">
+                <span id="tooltip_content">
+                    <img src="images/dough.jpeg" alt="Dough ball" />
+                    <br><b>Click cross to learn how to make dough</b>
+                </span>
+            </div>
+        </div>
+        <div>
+            <div class="history_cross">
+                <a href="#history"><img class="tooltip" data-tooltip-content="#tooltip_content2" src="images/cross.png" alt="Marker crocc for navigation"/></a>
+            </div>
+            <div class="tooltip_templates">
+                <span id="tooltip_content2">
+                    <img src="images/queen_margherita.jpg" width="312px" height="208px" alt="Queen Margherita" />
+                    <p><b>Click cross to know the origins of the Margherita</b></p>
+                </span>
+            </div>
+        </div>
+        <div>
+            <div class="toppings_cross">
+                <a href="#toppings"><img class="tooltip" data-tooltip-content="#tooltip_content3" src="images/cross.png" alt="Marker cross for navigation"/></a>
+            </div>
+            <div class="tooltip_templates">
+                <span id="tooltip_content3">
+                    <img src="images/toppings.jpg" alt="Margherita ingredients">
+                    <p><b>Click cross to add toppings</b></p>
+                </span>
+            </div>
+        </div>
+        <div>
+            <div class="cooking_cross">
+                <a href="#cook"><img class="tooltip" data-tooltip-content="#tooltip_content4" src="images/cross.png" alt="Marker crocc for navigation"/></a>
+            </div>
+            <div class="tooltip_templates">
+                <span id="tooltip_content4">
+                    <img src="images/cooked_pizza.png" alt="Cooked Margherita" width="312px" height="208px" />
+                    <p><b>Click cross to cook</b></p>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="nav_box">
+        <img src="images/black_page_break.jpg" alt="page break" id="history" height="85">
+    </div>
+    <div class="history_container">
+        <div class="history"><h2>History</h2></div>
+    </div>
+    <div class="history_container">
+        <div class="history_content">
+            <!-- History sourced from http://www.italymagazine.com/featured-story/pizza-margherita-history-and-recipe -->
+            <p>
+Pizza Margherita is to many the true Italian flag. According to popular tradition, in 1889, 28 years after the unification of Italy, during a visit to Naples of Queen Margherita of Savoy, wife of King Umberto I, chef Raffaele Esposito of Pizzeria Brandi and his wife created  a pizza resembling the colors of the Italian flag, red (tomato), white (mozzarella) and green (basil). They named it after the Queen - Pizza Margherita. Descriptions of such a pizza recipe, however, can be traced back to at least 1866 in  Francesco DeBouchard book “Customs and Traditions of Naples” -  (Vol II, p.. 124). There he describes the most popular pizza toppings of the time which included one with cheese and basil, often topped with slices of mozzarella. Whatever the real origins of this pizza recipe are, all we know for sure is that Raffaele Esposito's version for Queen Margherita was the one that made it popular. Since then it has grown into one of the most recognisable symbol of Italian food culture in the world. 
+            <br><br><br>
+            <a href="#home">Back to top</a></p>
+        </div>
+        <div class="history_picture">
+            <!-- Image sourced from http://www.bbc.com/news/magazine-33542392 -->
+            <img src="images/queen_margherita.jpg" alt="Picture of Queen Margherita of Italy" class="corners">
+
+        </div>
+        <div class="clearboth"></div>
+    </div>
+    <div class="nav_box">
+        <img src="images/black_page_break.jpg" alt="page break" id="dough" height="85">
+    </div>
+    <div class="dough">
+        <h2>Making the Dough</h2>
+        <div id="accordion">
+            <h3 id="step1">Step One</h3>
+            <div id="accordion_content">
+                <!-- Ingredients sourced from https://www.fornobravo.com/pizza-oven-library/article/pizza-sequence/pizza-dough/ -->
+                <div class="accordion_display1">
+                    <h4>Ingredients</h4>
+                    <p><b>By Volume</b><br>4 cups 00 flour<br>
+                    1 ½ cups, plus 2 TBL water<br>
+                    2 tsp salt<br>
+                    1/2 tsp dry active yeast<br><br>
+                    <b>By Weight</b><br>
+                    500gr 00 flour<br>
+                    325gr water (65% hydration)<br>
+                    10gr salt<br>
+                    3gr active dry yeast<br><br>
+                    <a href="#home">Back to top</a></p>
+                </div>
+                <div class="accordion_display2">
+                
+                    <!-- Image sourced from https://au.pinterest.com/pin/257057091207203439/ -->
+                    <img src="images/ingredients.jpg" alt="Raw pizza dough ingredients">
+                </div>
+                <div id="clearboth"></div>
+            </div>
+            <h3 id="step2">Step Two</h3>
+            <div>
+                <!-- Method sourced from http://www.italymagazine.com/featured-story/pizza-margherita-history-and-recipe -->
+                <p>Mix flour, water, salt and yeast. Pour remaining water into a bowl, dissolve the salt, add 10% of the total amount of flour you are planning to use, then dissolve the yeast, and start mixing gradually adding the remaining flour until the dough reaches the desired texture</p>
+                <img src="images/mixing.jpg" alt="Mixing raw dough ingredients">
+                <br><br>
+                <a href="#home">Back to top</a>
+            </div>
+            <h3>Step Three</h3>
+            <div>
+                <p>Knead everything together for 10 to 15 minutes until the dough is smooth and elastic, keeping your surface floured.</p>
+                <img src="images/kneeding.jpg" alt="Kneeding dough">
+                <br><br>
+                <a href="#home">Back to top</a>
+            </div>
+            <h3>Step Four</h3>
+            <div>
+                <p>Let the dough rest on a surface for 2 hours covered with a damp cloth and then divide into individual ball-shaped portions of 180 grams each. Set aside in a container to rise for a second time for 4-6 hours at room temperature</p>
+                <img src="images/dough.jpeg" alt="Proved dough">
+                <br><br>
+                <a href="#home">Back to top</a>
+            </div>
+        </div>
+    </div>
+    <div class="nav_box">
+        <img src="images/black_page_break.jpg" id="toppings" height="85">
+    </div>
+    <div class = "toppings">
+        <h2>Toppings</h2>
+        <h3 class="toppings_header"><br><br>Drag the toppings for your margherita on to your pizza<br><br><h3>
+        <!-- JQuery Plugin used from https://jqueryui.com/droppable/#photo-manager -->
+            <div class="ui-widget ui-helper-clearfix"> 
+            <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+              <li class="ui-widget-content ui-corner-tr">
+                <h5 class="ui-widget-header">Pizza sauce</h5>
+                <img src="images/tom_sauce.jpg" alt="Tomato sauce" width="96" height="72">
+              </li>
+              <li class="ui-widget-content ui-corner-tr">
+                <h5 class="ui-widget-header">Basil</h5>
+                <img src="images/basil.jpg" alt="Fresh Basil" width="96" height="72">
+              </li>
+              <li class="ui-widget-content ui-corner-tr">
+                <h5 class="ui-widget-header">Tomatoes</h5>
+                <img src="images/tomato.jpg" alt="Fresh Tomatoes" width="96" height="72">
+              </li>
+              <li class="ui-widget-content ui-corner-tr">
+                <h5 class="ui-widget-header">Mozzarella</h5>
+                <img src="images/mozzarella.jpg" alt="Buffulo Mozzarella" width="96" height="72">
+              </li>
+              <li class="ui-widget-content ui-corner-tr">
+                <h5 class="ui-widget-header">Olive Oil</h5>
+                <img src="images/olive_oil.jpg" alt="Olive Oil" width="96" height="72">
+              </li>
+              <li class="ui-widget-content ui-corner-tr">
+                <h5 class="ui-widget-header">Pepper</h5>
+                <img src="images/pepper.jpg" alt="Cracked pepper" width="96" height="72">
+              </li>
+              <li class="ui-widget-content ui-corner-tr">
+                <h5 class="ui-widget-header">Salt</h5>
+                <img src="images/sea-salt.jpg" alt="Cracked pepper" width="96" height="72">
+              </li>
+            </ul>
+
+            <div id="trash" class="ui-widget-content ui-state-default">
+              <h4 class="ui-widget-header">Pizza</h4>
+            </div>
+        </div>
+        <a href="#home">Back to top</a>
+    </div>
+    <div class="clearboth"></div>
+    <div class="nav_box">
+        <img src="images/black_page_break.jpg" id="cook" height="85">
+    </div>
+    <h2>Cooking</h2>
+    <div class="cooking">
+        <div class="cooking_container" id="cooking">
+            <img src="images/raw_pizza.png" alt="Raw pizza ingredients">
+            <img src="images/cooked_pizza.png" alt="Cooked pizza">
+        </div>
+    </div>
+    <br><br>
+    <a href="#home" class="font">Back to top</a>
+    <footer class="home_footer">
+    This website has been created as part of an assignment in an approved course of study for Curtin University and contains copyright material not created by the author. All copyright material used remains copyright of the respective owners and has been used here pursuant to Section 40 of the Copyright Act 1968 (Commonwealth of Australia). No part of this work may be reproduced without consent of the original copyright owners. See code comments for references.<br/>
+    Last modified 23 January 2017
+    </footer>
+    <script>
+        $(function(){
+            $("#home a").click(function(e){
+                e.preventDefault();
+                $('html,body').scrollTo(this.hash,this.hash);
+            });
+ 
+            $("#nav_items a").click(function(e){
+                e.preventDefault();
+                $('html,body').scrollTo(this.hash,this.hash);
+            });
+        });
+        
+    </script>
+</body><!-- End of displayable content -->
+</html>

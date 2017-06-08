@@ -1,0 +1,259 @@
+.navbar{
+    width: 100%;
+    padding: 5px;
+    border-radius: 3px;
+    position: fixed;
+    text-align: center;
+    background-color: whitesmoke;
+    z-index: 100;
+    border-bottom: 5px;
+    border-bottom-style: solid;
+    border-bottom-color:darkred;
+    margin-bottom: 0;
+}
+
+.nav_home{
+    float: left;
+}
+
+nav li{
+    display: inline;
+    padding-left: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    text-decoration: none;
+}
+
+nav a {
+    display: inline;
+    margin-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: "Helvetica", sans-serif;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.nav_box{
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+.home_container {
+
+    top: 0;
+    bottom: 0;
+    width: auto;
+    padding: 7px;
+}
+
+.home_img {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+}
+
+.nav_list{
+    padding-right: 290px;
+}
+
+.explore{
+    color: black;
+    background-color: whitesmoke;
+    margin-top: 0;
+    margin-right: 110px
+}
+
+.dough_cross {
+    position: absolute;
+    top: 200px;
+    left: 180px;
+    cursor: pointer;
+}
+
+.history_cross {
+    position: absolute;
+    top: 250px;
+    left: 990px;
+    cursor: pointer;
+}
+
+.toppings_cross{
+    position: absolute;
+    top: 350px;
+    left: 420px;
+    cursor: pointer;
+}
+
+.cooking_cross{
+    position: absolute;
+    top: 530px;
+    left: 880px;
+    cursor: pointer;
+}
+
+.tooltip_templates {
+    display: none;
+}
+
+h2{
+    text-align: center;
+    font-family: "Helvetica", sans-serif;
+}
+
+.history{
+    padding: 5px;
+}
+
+.history_container{
+    background-color: #b2ffb2;
+}
+
+.history_content{
+    width: 45%;
+    float: left;
+    padding-top: 35px;
+    padding-left: 20px;
+    font-family: "Helvetica", sans-serif;
+    font-weight: bold;
+}
+
+.history_picture{
+    width: 40%;
+    float: right;
+    padding: 10px;
+}
+.corners{
+    border-radius: 5px;
+}
+
+.accordion_content{
+    font-family: "Helvetica", sans-serif;
+    font-weight: bold;
+}
+
+.accordian_picture{
+    width: 40%;
+    padding: 10px;
+}
+
+.accordion_display1{
+    display: inline-block;
+    padding: 25px;
+}
+
+.accordion_display2{
+    display: inline-block;
+    padding: 25px;
+    padding-left: 50px;
+}
+
+.toppings{
+    background-color: #ff6666;
+}
+
+.toppings_header {
+    text-align: center;
+    font-family: "Helvetica", sans-serif;
+    font-weight: bold; 
+}
+/** CSS sourced from https://jqueryui.com/droppable/#photo-manager **/
+
+#gallery {
+    float: left;
+    width: 50%;
+    min-height: 12em;    
+}
+
+.gallery.custom-state-active{
+    background: #eee;
+}
+
+.gallery li {
+    float: left;
+    width: 96px;
+    padding: 0.4em;
+    margin: 0 0.4em 0.4em;
+    text-align: center;
+}
+
+.gallery li h5 {
+    margin: 0 0 0.4em;
+    cursor: move;
+}
+
+gallery li a {
+    float: right;
+}
+
+gallery li a.ui-icon-zoomin {
+    float: left;
+}
+
+.gallery li img{
+    width: 100%;
+    cursor: move;
+}
+
+#trash {
+    float: right;
+    width: 32%;
+    min-height: 18em;
+    padding: 1%;
+    margin-right: 150px;
+    margin-bottom: 15px;
+    background-image: url(../images/pizza_base.png);
+}
+
+#trash h4 {
+    line-height: 16px;
+    margin: 0 0 0.4em;
+}
+
+#trash h4 .ui-icon {
+    float: left;
+}
+
+#trash .gallery h5{
+    display: none;
+}
+
+/** End of sourced CSS **/
+
+.cooking{
+    background-image: url(../images/pizza-oven.jpg);
+
+}
+
+.cooking_container{
+    margin: 0 auto;
+    padding: 0px;
+    max-width: 765px;
+}
+
+footer {
+    width: auto;
+    margin-top: 15px;
+    text-align: center;
+    bottom: 2px;
+    background-color: lightgrey;
+    color: #000;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.font{
+    font-family: "Helvetica", sans-serif;
+}
+
+.clearboth
+{
+    clear: both;
+} 
